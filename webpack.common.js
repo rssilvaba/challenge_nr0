@@ -1,7 +1,3 @@
-const path = require("path");
-// var HtmlWebpackPlugin = require("html-webpack-plugin");
-// const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
-
 module.exports = {
   module: {
     rules: [
@@ -30,11 +26,9 @@ module.exports = {
       {
         test: /\.m?jsx?$/,
         exclude: /node_modules/,
-        //exclude: /node_modules\/(?!(\@pnp)\/).*/,
         use: {
           loader: "babel-loader",
           options: {
-            //configFile : './es5.babel.config.json',
             presets: [
               [
                 "@babel/preset-env",
@@ -42,7 +36,7 @@ module.exports = {
                   modules: false,
                   useBuiltIns: false,
                   targets: {
-                    browsers: ["IE 11"],
+                    browsers: ["defaults","not IE 11",],
                   },
                 },
               ],
