@@ -6,7 +6,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import { Pagination } from "@material-ui/lab";
+import { Pagination,Alert, AlertTitle } from "@material-ui/lab";
 import {
   Route,
   useHistory,
@@ -37,7 +37,14 @@ export const Categories = (props) => {
       keepPreviousData: true,
     });
 
-  return isLoading ? (
+  return isError ? 
+  <Container className={classes.cardGrid} maxWidth="md">
+    <Alert variant="outlined" severity="error">
+    <AlertTitle>We ran into an error!</AlertTitle>
+        {error.message}
+    </Alert>
+  </Container>
+  : isLoading ? (
     <Container className={classes.spinnerGrid} maxWidth="md">
       <CircularProgress style={{ display: "flex" }} />
     </Container>

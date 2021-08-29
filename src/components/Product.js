@@ -15,22 +15,20 @@ import {
   useLocation,
 } from "react-router";
 import { useQuery } from "react-query";
-import { fetchProduct, fetchProjects, useStyles } from "..";
+import { fetchProduct, useStyles } from "..";
 import { CardMedia, CircularProgress } from "@material-ui/core";
+import { Alert, AlertTitle } from "@material-ui/lab"
 
 function useParamQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
 export const Product = () => {
-  const { path, url } = useRouteMatch();
-  const history = useHistory();
-  let query = useParamQuery();
+  const { path } = useRouteMatch();
   const classes = useStyles();
   const theme = useTheme();
 
   const { productId: productIdParam } = useParams();
-  const pageId = parseInt(query.get("page"), 10);
   const productId = parseInt(productIdParam, 10);
   const { isLoading, isError, error, data:product, isFetching, isPreviousData } =
     useQuery(
@@ -38,7 +36,14 @@ export const Product = () => {
       () => fetchProduct(productId),
       { keepPreviousData: true }
     );
-  return isLoading ? (
+  return isError ? 
+  <Container className={classes.cardGrid} maxWidth="md">
+    <Alert variant="outlined" severity="error">
+    <AlertTitle>We ran into an error!</AlertTitle>
+        {error.message}
+    </Alert>
+  </Container>
+  : isLoading ? (
     <Container className={classes.spinnerGrid} maxWidth="md">
       <CircularProgress style={{ display: "flex" }} />
     </Container>
