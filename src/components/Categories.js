@@ -1,20 +1,15 @@
 import { useTheme } from "@material-ui/core/styles";
 
 import React from "react";
-// import CameraIcon from '@material-ui/icons/PhotoCamera';
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
-import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Link from "@material-ui/core/Link";
 import { Pagination } from "@material-ui/lab";
 import {
   Route,
   useHistory,
-  useParams,
   useRouteMatch,
   Switch,
   useLocation,
@@ -24,31 +19,15 @@ import { fetchCategories, useStyles } from "..";
 import { Products } from "./Products";
 import { CardMedia, CircularProgress } from "@material-ui/core";
 
-
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Create with Material UI
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
 function useParamQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
 export const Categories = (props) => {
   let query = useParamQuery();
-  const { path, url } = useRouteMatch();
+  const { path } = useRouteMatch();
   const theme = useTheme();
   const classes = useStyles();
-  const { pageId: pageIdParam, categoryId: categoryIdParam } = useParams();
   const pageId = parseInt(query.get("page"), 10);
   const page = Number.isInteger(pageId) ? pageId : 1;
   const history = useHistory();
@@ -57,16 +36,7 @@ export const Categories = (props) => {
     useQuery(["categories", page], () => fetchCategories(page), {
       keepPreviousData: true,
     });
-  console.log(
-    "isLoading",
-    isLoading,
-    "isError",
-    isError,
-    "isFetching",
-    isFetching,
-    "isPreviousData",
-    isPreviousData
-  );
+
   return isLoading ? (
     <Container className={classes.spinnerGrid} maxWidth="md">
       <CircularProgress style={{ display: "flex" }} />
@@ -94,9 +64,7 @@ export const Categories = (props) => {
                     page={page}
                     color="primary"
                     onChange={(evt, val) => {
-                      //setPage(val)
                       history.push(`/categories?page=${val}`);
-                      //history.push(`/cats?page=${page??1}`)
                     }}
                   />
                 </Grid>

@@ -1,16 +1,11 @@
-import { useTheme } from "@material-ui/core/styles";
-
 import React from "react";
-// import CameraIcon from '@material-ui/icons/PhotoCamera';
+
+import { useTheme } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
-import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Link from "@material-ui/core/Link";
-import { Pagination } from "@material-ui/lab";
 import {
   Route,
   useHistory,
@@ -21,16 +16,11 @@ import {
 } from "react-router";
 import { useQuery } from "react-query";
 import { fetchProduct, fetchProjects, useStyles } from "..";
-import { Button, CardActions, CardMedia, CircularProgress } from "@material-ui/core";
-import IconButton from "@material-ui/core/IconButton";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
+import { CardMedia, CircularProgress } from "@material-ui/core";
+
 function useParamQuery() {
   return new URLSearchParams(useLocation().search);
 }
-
 
 export const Product = () => {
   const { path, url } = useRouteMatch();
@@ -39,9 +29,8 @@ export const Product = () => {
   const classes = useStyles();
   const theme = useTheme();
 
-  const { pageId: pageIdParam, productId: productIdParam } = useParams();
+  const { productId: productIdParam } = useParams();
   const pageId = parseInt(query.get("page"), 10);
-  const page = Number.isInteger(pageId) ? pageId : 1;
   const productId = parseInt(productIdParam, 10);
   const { isLoading, isError, error, data:product, isFetching, isPreviousData } =
     useQuery(
@@ -122,13 +111,6 @@ export const Product = () => {
                             </Typography>
                           </Typography>
                         </CardContent>
-                        {/* <CardActions style={{ padding: "16px" }}>
-                          <Typography variant="subtitle1">
-                            {product?.data?.attributes?.name}
-                          </Typography>
-
-                          
-                        </CardActions> */}
                       </Card>
                     </Grid>
                 

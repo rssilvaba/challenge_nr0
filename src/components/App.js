@@ -33,8 +33,6 @@ const useStyles = makeStyles((theme) => ({
 
 
 function AppMenu() {
-  // const { categoryId: categoryIdParam } = useParams();
-  // const categoryId = parseInt(categKoryIdParam, 10);
   const classes = useStyles();
   const history = useHistory();
   const loc = useLocation();
