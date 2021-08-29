@@ -17,7 +17,7 @@ import {
 } from "react-router";
 import { useQuery } from "react-query";
 import { fetchProducts, useStyles } from "..";
-import { CardActions, CardMedia, CircularProgress } from "@material-ui/core";
+import { Button, CardActions, CardMedia, CircularProgress } from "@material-ui/core";
 function useParamQuery() {
   return new URLSearchParams(useLocation().search);
 }
@@ -42,7 +42,13 @@ export const Products = () => {
     );
   return isError ? 
   <Container className={classes.cardGrid} maxWidth="md">
-    <Alert variant="outlined" severity="error">
+    <Alert variant="outlined" severity="error"
+      action={
+        <Button color="inherit" size="small" onClick={()=>history.goBack()}>
+          Go Back
+        </Button>
+      }
+    >
     <AlertTitle>We ran into an error!</AlertTitle>
         {error.message}
     </Alert>

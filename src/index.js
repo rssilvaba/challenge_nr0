@@ -62,8 +62,22 @@ export const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const fetchProduct = (productId) => fetch(`${APIBaseURL}/products/${productId}`,defaultHeaders).then((res) => res.json())
-export const fetchProducts = (page = 1, categoryId) => fetch(`${APIBaseURL}/products?page=${page}&filter[taxons]=${categoryId}`,defaultHeaders).then((res) => res.json())
+export const fetchProduct = (productId) => {
+  if (Number.isNaN(productId)) {
+    throw new Error('Provide an Product Id as a number')
+  }
+  else {
+    return fetch(`${APIBaseURL}/products/${productId}`,defaultHeaders).then((res) => res.json())
+  }
+}
+export const fetchProducts = (page = 1, categoryId) => {
+  if (Number.isNaN(categoryId)) {
+    throw new Error('Provide an Category Id as a number')
+  }
+  else {
+    return fetch(`${APIBaseURL}/products?page=${page}&filter[taxons]=${categoryId}`,defaultHeaders).then((res) => res.json())
+  }
+}
 export const fetchCategories = (page = 1) => fetch(`${APIBaseURL}/taxons?page=${page}`,defaultHeaders).then((res) => res.json())
 
 

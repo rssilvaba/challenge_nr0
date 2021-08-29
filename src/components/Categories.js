@@ -17,7 +17,7 @@ import {
 import { useQuery } from "react-query";
 import { fetchCategories, useStyles } from "..";
 import { Products } from "./Products";
-import { CardMedia, CircularProgress } from "@material-ui/core";
+import { Button, CardMedia, CircularProgress } from "@material-ui/core";
 
 function useParamQuery() {
   return new URLSearchParams(useLocation().search);
@@ -37,11 +37,16 @@ export const Categories = (props) => {
       keepPreviousData: true,
     });
 
-  return isError ? 
+  return (isError || page > data?.meta?.total_pages) ? 
   <Container className={classes.cardGrid} maxWidth="md">
-    <Alert variant="outlined" severity="error">
+    <Alert variant="outlined" severity="error"
+    action={
+      <Button color="inherit" size="small" onClick={()=>history.goBack()}>
+        Go Back
+      </Button>
+    }>
     <AlertTitle>We ran into an error!</AlertTitle>
-        {error.message}
+        {page > data?.meta?.total_pages?'Page does not exist':error.message}
     </Alert>
   </Container>
   : isLoading ? (
