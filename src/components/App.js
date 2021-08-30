@@ -43,17 +43,22 @@ function AppMenu() {
     if(loc.pathname.includes('category')){
       return 'Categories'
     }
+    if(loc.pathname === '/'){
+      return ''
+    }
     return 'Products'
   })()
   const NavLink = (() => {
-    if(loc.pathname.includes('categories')){
+    if(loc.pathname.includes('categories') || loc.pathname === '/'){
       return '/'
     }
     if(loc.pathname.includes('category')){
       return '/categories'
     }
+    
     return null
   })()
+  debugger
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -64,7 +69,11 @@ function AppMenu() {
           <Typography variant="h6" className={classes.title}>
             Sample Store
           </Typography>
-          <Button color="inherit" onClick={()=>NavLink===null ?history.goBack():history.push(NavLink)}>{NavText}</Button>
+          { loc.pathname !== '/' 
+            ? 
+            <Button color="inherit" onClick={()=>NavLink===null ? history.goBack():history.push(NavLink)}>{NavText}</Button>
+            : null
+          }
         </Toolbar>
       </AppBar>
     </div>
